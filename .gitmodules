@@ -1,0 +1,15 @@
+[submodule "site-lisp/rinari"]
+	path = site-lisp/rinari
+	url = http://github.com/eschulte/rinari.git
+[submodule "site-lisp/yasnippets-rails"]
+	path = site-lisp/yasnippets-rails
+	url = http://github.com/eschulte/yasnippets-rails.git
+[submodule "site-lisp/yaml-mode"]
+	path = site-lisp/yaml-mode
+	url = http://github.com/yoshiki/yaml-mode.git
+[submodule "site-lisp/textmate"]
+	path = site-lisp/textmate
+	url = http://github.com/defunkt/textmate.el.git
+[submodule "site-lisp/magit"]
+	path = site-lisp/magit
+	url = http://github.com/philjackson/magit.git

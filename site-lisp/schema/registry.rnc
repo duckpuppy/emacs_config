@@ -1,0 +1,60 @@
+# 
+#         =====================================
+#         The DTD for the IzPack CustomActions
+#         RegistryInstallerListener
+#         All entries can contain IzPack variables like $INSTALL_PATH
+#         or ${myOwnVariable.WhichIsDefinedAfterPacks}
+#         =====================================
+# $Id$
+#
+
+# The root element
+
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+
+registry = element registry { attlist.registry, pack* }
+attlist.registry &= empty
+# The pack sections. The names should be the same as the pack sections in
+# the install xml file (see also installation.dtd). The defined actions 
+# are performed only for packs which are selected for installation.
+pack = element pack { attlist.pack, key*, value* }
+attlist.pack &= attribute name { text }
+# The key section. It defines, what key should be created
+key = element key { attlist.key, empty }
+#  Path of the key in Windows syntax without the root.
+attlist.key &= attribute keypath { text }
+# Root of the key as symbol.
+attlist.key &=
+  attribute root {
+    "HKCR" | "HKCU" | "HKLM" | "HKU" | "HKPD" | "HKCC" | "HKDDS"
+  }
+# The value section. It defines, what value should be created or modified
+# with what contents. The type of contents will be implicit determined
+# by the setting. Only one setting of the types are valid.
+value = element value { attlist.value, bin*, multi* }
+#  Name of the value to be set or modified
+attlist.value &= attribute name { text }
+# The key path under which the value should be placed 
+# in Windows syntax without the root. 
+attlist.value &= attribute keypath { text }
+# Root of the key as symbol.
+attlist.value &=
+  attribute root {
+    "HKCR" | "HKCU" | "HKLM" | "HKU" | "HKPD" | "HKCC" | "HKDDS"
+  }
+# Override an existent value or not
+attlist.value &=
+  [ a:defaultValue = "true" ] attribute override { "true" | "false" }?
+# Contents part. Only one entry of it should be done !!
+
+# Contents for value of type STRING
+attlist.value &= attribute string { text }?
+# Contents for value of type DWORD
+attlist.value &= attribute dword { text }?
+# Contents for value of type BINARY written as comma separated list of hex
+bin = element bin { attlist.bin, empty }
+attlist.bin &= attribute data { text }
+# Contents for value of type MULTI_STRING
+multi = element multi { attlist.multi, empty }
+attlist.multi &= attribute data { text }
+start = registry

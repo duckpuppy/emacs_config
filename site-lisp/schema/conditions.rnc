@@ -1,0 +1,48 @@
+conditions =
+  element conditions {
+    attlist.conditions, condition*, panelcondition*, packcondition*
+  }
+attlist.conditions &= empty
+condition =
+  element condition {
+    attlist.condition,
+    (condition?
+     | (condition, condition)
+     | (name, value)
+     | packid
+     | (java, returnvalue)
+     | (obligatory?, module+))
+  }
+attlist.condition &=
+  attribute id { xsd:ID }?,
+  attribute type { text },
+  attribute refid { xsd:IDREF }?
+packcondition = element packcondition { attlist.packcondition, empty }
+attlist.packcondition &=
+  attribute packid { text },
+  attribute conditionid { xsd:IDREF },
+  attribute optional { text }?
+panelcondition =
+  element panelcondition { attlist.panelcondition, empty }
+attlist.panelcondition &=
+  attribute panelid { text },
+  attribute conditionid { xsd:IDREF }
+name = element name { attlist.name, text }
+attlist.name &= empty
+value = element value { attlist.value, text }
+attlist.value &= empty
+packid = element packid { attlist.packid, text }
+attlist.packid &= empty
+returnvalue = element returnvalue { attlist.returnvalue, text }
+java = element java { attlist.java, class, field }
+attlist.java &= empty
+field = element field { attlist.field, text }
+attlist.field &= empty
+class = element class { attlist.class, text }
+attlist.class &= empty
+attlist.returnvalue &= attribute type { text }
+module = element module { attlist.module, text }
+attlist.module &= empty
+obligatory = element obligatory { attlist.obligatory, empty }
+attlist.obligatory &= empty
+start = conditions
