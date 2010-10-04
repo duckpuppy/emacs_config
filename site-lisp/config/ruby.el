@@ -14,8 +14,8 @@
 
 (add-local-load-path "ruby-block")
 (require 'ruby-block)
-
 (require 'ruby-electric)
+
 ;; ruby electric
 (defun try-complete-abbrev (old)
   (if (expand-abbrev) t nil))
@@ -80,29 +80,6 @@
    (add-hook 'ruby-mode-hook
              (lambda ()
                (setq ac-omni-completion-sources '(("\\.\\=" ac-source-rcodetools)))));)
-
-;; flymake
-(add-hook 'ruby-mode-hook
-          '(lambda ()
-
-             ;; Don't want flymake mode for ruby regions in rhtml files and also on read only files
-             (if (and (not (null buffer-file-name)) (file-writable-p buffer-file-name))
-                 (flymake-mode))
-             ))
-
-;; Invoke ruby with '-c' to get syntax checking
-(defun flymake-ruby-init ()
-  (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-intemp))
-         (local-file  (file-relative-name
-                       temp-file
-                       (file-name-directory buffer-file-name)))
-		 (cygwin-file (windows-path-convert-file-name local-file)))
-    (list "ruby" (list "-c" cygwin-file))))
-
-(push '(".+\\.rb$" flymake-ruby-init) flymake-allowed-file-name-masks)
-(push '(".+\\.rjs$" flymake-ruby-init) flymake-allowed-file-name-masks)
-(push '("Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)
 
 ;; rcodetools
 (add-local-load-path "rcodetools")
