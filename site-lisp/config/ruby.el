@@ -33,7 +33,7 @@
   ;;  (make-variable-buffer-local 'compile-command)
   ;;  (setq compile-command (concat "ruby " (buffer-file-name) " "))
   (imenu-add-to-menubar "IMENU")
-  (ruby-electric-mode t)
+;  (ruby-electric-mode t)
   (ruby-block-mode t)
   (define-key ruby-mode-map "\C-c\C-a" 'ruby-eval-buffer)
   (setq standard-indent 2)
