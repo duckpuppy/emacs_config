@@ -24,6 +24,8 @@
    try-complete-file-name
    try-expand-dabbrev))
 
+(setq ruby-electric-expand-delimiters-list nil)
+
 (defun my-ruby-mode-hook ()
   ;;  (make-variable-buffer-local 'compilation-error-regexp-alist)
   ;;   (setq compilation-error-regexp-alist
@@ -33,7 +35,7 @@
   ;;  (make-variable-buffer-local 'compile-command)
   ;;  (setq compile-command (concat "ruby " (buffer-file-name) " "))
   (imenu-add-to-menubar "IMENU")
-;  (ruby-electric-mode t)
+  (ruby-electric-mode t)
   (ruby-block-mode t)
   (define-key ruby-mode-map "\C-c\C-a" 'ruby-eval-buffer)
   (setq standard-indent 2)
@@ -80,29 +82,44 @@
                (setq ac-omni-completion-sources '(("\\.\\=" ac-source-rcodetools)))));)
 
 ;; flymake
-;(add-hook 'ruby-mode-hook
-;          '(lambda ()
+(add-hook 'ruby-mode-hook
+          '(lambda ()
 
              ;; Don't want flymake mode for ruby regions in rhtml files and also on read only files
-;             (if (and (not (null buffer-file-name)) (file-writable-p buffer-file-name))
-;                 (flymake-mode))
-;             ))
+             (if (and (not (null buffer-file-name)) (file-writable-p buffer-file-name))
+                 (flymake-mode))
+             ))
 
 ;; Invoke ruby with '-c' to get syntax checking
-;(defun flymake-ruby-init ()
-;  (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-;                       'flymake-create-temp-intemp))
-;         (local-file  (file-relative-name
-;                       temp-file
-;                       (file-name-directory buffer-file-name))))
-;    (list "ruby" (list "-c" local-file))))
+(defun flymake-ruby-init ()
+  (let* ((temp-file   (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-intemp))
+         (local-file  (file-relative-name
+                       temp-file
+                       (file-name-directory buffer-file-name)))
+		 (cygwin-file (windows-path-convert-file-name local-file)))
+    (list "ruby" (list "-c" cygwin-file))))
 
-;(push '(".+\\.rb$" flymake-ruby-init) flymake-allowed-file-name-masks)
-;(push '(".+\\.rjs$" flymake-ruby-init) flymake-allowed-file-name-masks)
-;(push '("Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)
+(push '(".+\\.rb$" flymake-ruby-init) flymake-allowed-file-name-masks)
+(push '(".+\\.rjs$" flymake-ruby-init) flymake-allowed-file-name-masks)
+(push '("Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)
 
 ;; rcodetools
-;(add-local-load-path "rcodetools")
-;(require 'anything-rcodetools)
-;(setq rct-get-all-methods-command "PAGER=cat fri -l -L")
-;(define-key anything-map "\C-z" 'anything-execute-persistent-action)
+(add-local-load-path "rcodetools")
+(require 'anything-rcodetools)
+(setq rct-get-all-methods-command "PAGER=cat fri -l -L")
+(define-key anything-map "\C-z" 'anything-execute-persistent-action)
+
+;(defvar my-ruby-close-brace-goto-close t)
+;(defun my-ruby-close-brace ()
+;  "replacement for ruby-electric-brace for the close brace"
+;  (interactive)
+;  (let ((p (point)))
+;    (if my-ruby-close-brace-goto-close
+;        (unless (search-forward "}" nil t)
+;          (message "No close brace found")
+;          (insert "}"))
+;      (insert "}")
+;      (save-excursion (if (search-forward "}" nil t)
+;                           (delete-char -1))))))
+;(define-key ruby-mode-map "}" 'my-ruby-close-brace)

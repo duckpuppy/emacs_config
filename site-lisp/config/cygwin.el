@@ -12,11 +12,12 @@
 (setenv "PATH" (concat "c:/cygwin/bin;" (getenv "PATH")))
 (setq exec-path (cons "c:/cygwin/bin/" exec-path))
 (require 'cygwin-mount)
+(require 'windows-path)
 (cygwin-mount-activate)
 (add-hook 'comint-output-filter-functions
-	  'shell-strip-ctrl-m nil t)
+		  'shell-strip-ctrl-m nil t)
 (add-hook 'comint-output-filter-functions
-	  'comint-watch-for-password-prompt nil t)
+		  'comint-watch-for-password-prompt nil t)
 (setq explicit-shell-file-name "bash")
 ;; For subprocesses invoked via the shell
 ;; (e.g., "shell -c command")
@@ -35,15 +36,15 @@ global variable `telnet-program'. Normally input is edited
 in Emacs and sent a line at a time."
   (interactive "sOpen connection to host: ")
   (let* ((comint-delimiter-argument-list '(?\  ?\t))
-	 (properties (cdr (assoc host telnet-host-properties)))
-	 (telnet-program (if properties (car properties) telnet-program))
-	 (name (concat telnet-program "-" (comint-arguments host 0 nil) ))
-	 (buffer (get-buffer (concat "*" name "*")))
-	 (telnet-options (if (cdr properties)
-			     (cons "-l" (cdr properties))))
-	 process)
+		 (properties (cdr (assoc host telnet-host-properties)))
+		 (telnet-program (if properties (car properties) telnet-program))
+		 (name (concat telnet-program "-" (comint-arguments host 0 nil) ))
+		 (buffer (get-buffer (concat "*" name "*")))
+		 (telnet-options (if (cdr properties)
+							 (cons "-l" (cdr properties))))
+		 process)
     (if (and buffer (get-buffer-process buffer))
-	(pop-to-buffer (concat "*" name "*"))
+		(pop-to-buffer (concat "*" name "*"))
       (pop-to-buffer
        (apply 'make-comint name telnet-program nil telnet-options))
       (setq process (get-buffer-process (current-buffer)))
@@ -67,7 +68,7 @@ in Emacs and sent a line at a time."
   "Fixed the problem that the login prompt cannot be seen."
   (interactive "sFtp to Host : ")
   (let ((bufname)
-	(bufobject))
+		(bufobject))
     (setq bufname (concat "*ftp-" host "*"))
     (setq bufobject (get-buffer bufname))
 
@@ -77,19 +78,19 @@ in Emacs and sent a line at a time."
       )
      (t
       (let ((login)
-	    (process)
-	    (ftp-program "ftp.exe"))
-	(setq bufobject (get-buffer-create bufname))
-	(pop-to-buffer bufobject)
-	(comint-mode)
-	(setq login (read-from-minibuffer (format "%s - Login : " host)))
-	(comint-exec bufobject bufname ftp-program nil
-		     (list "--prompt=ftp> " "-v" host))
-	(message "Login in progress. Please wait ...")
-	(send-invisible (format "%s" login))
-	(setq process (get-buffer-process (current-buffer)))
-	(accept-process-output process)
-	)
+			(process)
+			(ftp-program "ftp.exe"))
+		(setq bufobject (get-buffer-create bufname))
+		(pop-to-buffer bufobject)
+		(comint-mode)
+		(setq login (read-from-minibuffer (format "%s - Login : " host)))
+		(comint-exec bufobject bufname ftp-program nil
+					 (list "--prompt=ftp> " "-v" host))
+		(message "Login in progress. Please wait ...")
+		(send-invisible (format "%s" login))
+		(setq process (get-buffer-process (current-buffer)))
+		(accept-process-output process)
+		)
       )
      )
     )
@@ -131,41 +132,72 @@ in Emacs and sent a line at a time."
   ;; Remaining arguments are strings passed as command arguments to PROGRAM."
   ;; Look for a handler for default-directory in case it is a remote file name.
   (let ((handler
-	 (find-file-name-handler (directory-file-name default-directory)
-				 'dired-call-process)))
+		 (find-file-name-handler (directory-file-name default-directory)
+								 'dired-call-process)))
     (if handler (apply handler 'dired-call-process
-		       program discard arguments)
+					   program discard arguments)
       (progn
-	(if (string-equal program "gunzip")
-	    (progn
-	      (setq program "gzip")
-	      (add-to-list 'arguments "-d")
-	      )
-	  )
-	(apply 'call-process program nil (not discard) nil arguments)
-	)
+		(if (string-equal program "gunzip")
+			(progn
+			  (setq program "gzip")
+			  (add-to-list 'arguments "-d")
+			  )
+		  )
+		(apply 'call-process program nil (not discard) nil arguments)
+		)
       )))
 
 
 (add-hook 'shell-mode-hook
-	  '(lambda ()
-	     (local-set-key [home] ; move to beginning of line, after prompt
-			    'comint-bol)
-	     (local-set-key [up] ; cycle backward through command history
-			    '(lambda () (interactive)
-			       (if (comint-after-pmark-p)
-				   (comint-previous-input 1)
-				 (previous-line 1))))
-	     (local-set-key [down] ; cycle forward through command history
-			    '(lambda () (interactive)
-			       (if (comint-after-pmark-p)
-				   (comint-next-input 1)
-				 (forward-line 1))))
-	     ))
+		  '(lambda ()
+			 (local-set-key [home] ; move to beginning of line, after prompt
+							'comint-bol)
+			 (local-set-key [up] ; cycle backward through command history
+							'(lambda () (interactive)
+							   (if (comint-after-pmark-p)
+								   (comint-previous-input 1)
+								 (previous-line 1))))
+			 (local-set-key [down] ; cycle forward through command history
+							'(lambda () (interactive)
+							   (if (comint-after-pmark-p)
+								   (comint-next-input 1)
+								 (forward-line 1))))
+			 ))
 
 ;; Set up aspell
 (if (or (eq system-type 'cygwin)
 		(eq system-type 'gnu/linux)
 		(eq system-type 'linux))
 	(setq-default ispell-program-name "/usr/bin/aspell")
-	(setq-default ispell-program-name "c:/cygwin/bin/aspell.exe"))
+  (setq-default ispell-program-name "c:/cygwin/bin/aspell.exe"))
+
+;; Functions copied from windows-path.el to convert paths from Windows to cygwin
+(defconst windows-path-style1-regexp "\\`\\(.*/\\)?\\([a-zA-Z]:\\)\\\\")
+(defconst windows-path-style2-regexp "\\`\\(.*/\\)?\\([a-zA-Z]:\\)/")
+
+;; We cannot assume that NAME matched windows-path-style1-regexp nor
+;; windows-path-cygwin-style2-regexp because this function could be called with
+;; either argument to 'expand-file-name', but only one argument to
+;; 'expand-file-name' may have matched a regexp.  For example,
+;; '(expand-file-name ".." "c:/")' will trigger '(windows-path-convert-file-name
+;; "..")' and '(windows-path-convert-file-name "c:/")' to be called.
+(defun windows-path-convert-file-name (name)
+  "Convert file NAME, to cygwin style.
+`x:/' to `/cygdrive/x/'.
+NOTE: \"/cygdrive/\" is only an example for the cygdrive-prefix \(see
+`windows-path-cygdrive-prefix')."
+  (cond ((string-match windows-path-style1-regexp name)
+         (setq filename
+               (replace-match (concat windows-path-cygdrive-prefix
+                                      (downcase (substring (match-string 2 name) 0 1)))
+                              t nil name 2))
+         (while (string-match "\\\\" filename)
+           (setq filename
+                 (replace-match "/" t nil filename)))
+         filename)
+        ((string-match windows-path-style2-regexp name)
+         (replace-match (concat windows-path-cygdrive-prefix
+                                (downcase (substring (match-string 2 name) 0 1)))
+                        t nil name 2))
+
+        (t name)))
