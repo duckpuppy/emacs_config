@@ -14,7 +14,7 @@
 
 (add-local-load-path "ruby-block")
 (require 'ruby-block)
-  
+
 (require 'ruby-electric)
 ;; ruby electric
 (defun try-complete-abbrev (old)
