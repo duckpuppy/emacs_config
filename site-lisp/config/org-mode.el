@@ -107,7 +107,7 @@
                                      ("appointment" ?a "* %?\n  %U" "~/org/todo.org" "Appointments" nil))))
 
 ;; ditaa
-(setq org-ditaa-jar-path (concat emacs-local-site-lisp "org-6.34c/contrib/scripts/ditaa.jar"))
+(setq org-ditaa-jar-path (concat emacs-local-site-lisp "org-7.01h/contrib/scripts/ditaa.jar"))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -124,7 +124,7 @@
    (sh . t)
    (sql . nil)
    (sqlite . t)))
-   
+
 ;; Custom agenda views
 (setq org-agenda-custom-commands
       (quote (("s" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-scheduled nil)
