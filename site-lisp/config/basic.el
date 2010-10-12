@@ -31,7 +31,7 @@
 (setq c-basic-offset 4)
 
 ;; Change the font to something nicer
-(set-default-font "-outline-Consolas-normal-r-normal-normal-14-97-96-96-c-*-iso8859-1")
+(set-default-font "-outline-Inconsolata-normal-r-normal-normal-14-97-96-96-c-*-iso8859-1")
 
 ;; Disable the menu bar and the tool bar
 
@@ -98,4 +98,4 @@
 	 ) auto-mode-alist))
 
 ;; This seems to have disappeared in Emacs 23.2
-(setq warning-suppress-types nil) 
+(setq warning-suppress-types nil)
