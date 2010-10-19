@@ -1,5 +1,5 @@
 (add-local-load-path "elib-1.0")
-(add-local-load-path "jde-2.3.5.1/lisp")
+(add-local-load-path "jdee-2.4.0.1/lisp")
 (require 'jde)
 (add-to-list 'auto-mode-alist '("\\.java$" . jde-mode))
 
