@@ -32,7 +32,7 @@
 ;; ============================
 ;; Load ECB
 ;; ============================
-(require 'ecb)
+(require 'ecb-autoloads)
 
 (setq ecb-tip-of-the-day nil)
 (setq ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))
@@ -47,20 +47,19 @@
 (global-set-key "\C-ck" 'mode-compile-kill)
 
 ;; Load git support
-;(add-local-load-path "git-emacs")
-;(require 'git-emacs)
-;(require 'git-status)
 (add-local-load-path "magit")
 (require 'magit)
 (global-set-key "\C-cg" 'magit-status)
 
-;; Load P4 support
-(add-local-load-path "p4")
-(require 'p4)
-(setq p4-do-find-file nil)
-(require 'vc-p4)
-(if (eq system-type 'windows-nt)
-	(p4-set-p4-executable "c:/program files/perforce/p4.exe"))
-;(p4-set-p4-port "nrc-perforce.devlab.norc.s1.com:1666")
+;; Only load Perforce support on my work laptop
+(if (is-work-laptop)
+	;; Load P4 support
+	(progn
+	  (add-local-load-path "p4")
+	  (require 'p4)
+	  (setq p4-do-find-file nil)
+	  (require 'vc-p4)
+	  (if (eq system-type 'windows-nt)
+		  (p4-set-p4-executable "c:/program files/perforce/p4.exe"))))
 
 (require 'psvn)

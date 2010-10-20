@@ -48,7 +48,7 @@
 (transient-mark-mode t) ;; No region when it is not highlighted
 ;; (setq cua-keep-region-after-copy t) ;; Standard Windows behaviour
 
-(require 'ido)
+(autoload 'ido "Interactively Do Things")
 (ido-mode t)
 
 ;; Highlight matches from searches

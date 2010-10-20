@@ -76,3 +76,15 @@ LIST defaults to all existing live buffers."
                    (kill-buffer buffer))
              (kill-buffer buffer))))
     (setq list (cdr list))))
+
+(defun is-work-laptop ()
+  (interactive)
+  "Returns true if this is my work laptop, false if not"
+  (string-equal system-name "PAIKENS-LT"))
+
+(defun generate-my-autoloads nil
+  (interactive)
+  "Generate autoloads for packages which don't provide them already"
+  (interactive)
+  (setq generated-autoload-file "~/.emacs.d/site-lisp/config/loaddefs.el")
+  (update-directory-autoloads "~/.emacs.d/site-lisp/org-7.01h/lisp"))

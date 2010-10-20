@@ -6,7 +6,8 @@
 (add-local-load-path "org-7.01h/contrib/lisp")
 
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
-(require 'org-install)
+;(require 'org-install)
+(require 'loaddefs)
 
 ;;
 ;; Standard key bindings
