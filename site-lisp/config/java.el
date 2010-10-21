@@ -1,37 +1,5 @@
-(add-local-load-path "elib-1.0")
-(add-local-load-path "jdee-2.4.0.1/lisp")
+(add-local-load-path "malabar-1.5-SNAPSHOT/lisp")
+(require 'malabar-mode)
+(setq malabar-groovy-lib-dir "~/.emacs.d/site-lisp/malabar-1.5-SNAPSHOT/lib")
+(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
 
-(setq defer-loading-jde t)
-(if defer-loading-jde
-	(progn
-	  (autoload 'jde-mode "jde" "JDE mode." t)
-	  (add-to-list 'auto-mode-alist '("\\.java$" . jde-mode)))
-  (require 'jde))
-
-(eval-after-load "jde"
-  '(progn
-	 (defun my-jde-mode-hook ()
-	   (c-add-style
-		"my-java"
-		'("java"
-		  (c-basic-offset . 4)
-		  (c-hanging-braces-alist . (
-									 (substatement-open after)
-									 ))
-		  ))
-	   (c-set-style "my-java")
-										;  (setq c-auto-newline t)
-	   (setq c-comment-continuation-stars "* ")
-	   (define-key c-mode-base-map "\C-m" 'newline-and-indent)
-	   )
-
-	 (setq
-	  jde-jdk-registry (quote (
-							   ("1.5.0_22" . "c:/program files/java/1.5.0_22")
-							   ("1.6.0_13" . "c:/program files/java/1.6.0_13")
-							   ("default" . "$JAVA_HOME")
-							   )
-							  )
-	  jde-jdk `("default")
-	  )
-	 (add-hook 'jde-mode-hook 'my-jde-mode-hook)))
