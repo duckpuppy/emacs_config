@@ -62,4 +62,12 @@
 	  (if (eq system-type 'windows-nt)
 		  (p4-set-p4-executable "c:/program files/perforce/p4.exe"))))
 
+
+(add-local-load-path "emacs-eclim")
+(add-local-load-path "emacs-eclim/vendor")
+(require 'eclim)
+
+(setq eclim-auto-save t)
+(global-eclim-mode)
+
 (require 'psvn)

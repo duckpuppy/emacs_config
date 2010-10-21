@@ -13,3 +13,6 @@
 [submodule "site-lisp/magit"]
 	path = site-lisp/magit
 	url = http://github.com/philjackson/magit.git
+[submodule "site-lisp/emacs-eclim"]
+	path = site-lisp/emacs-eclim
+	url = http://github.com/senny/emacs-eclim.git
