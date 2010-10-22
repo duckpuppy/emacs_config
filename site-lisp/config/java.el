@@ -25,14 +25,11 @@
 	   (define-key c-mode-base-map "\C-m" 'newline-and-indent)
 	   )
 
-	 (setq jde-mvn-nexus-url "http://nexus.s1.com/content/groups/s1")
-	 (setq
-	  jde-jdk-registry (quote (
+	 (setq jde-jdk-registry '(
 							   ("1.5.0_22" . "c:/program files/java/1.5.0_22")
 							   ("1.6.0_13" . "c:/program files/java/1.6.0_13")
 							   ("default" . "$JAVA_HOME")
 							   )
 							  )
-	  jde-jdk `("default")
-	  )
+	 (setq jde-jdk '("default"))
 	 (add-hook 'jde-mode-hook 'my-jde-mode-hook)))

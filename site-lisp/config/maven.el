@@ -58,15 +58,15 @@
 									   (concat "mvn -f " path (concat "/pom.xml " goal))
 									   nil nil 'mvn-command-history))))))
 
-;(push '("\\(.*?\\):\\([0-9]+\\): error: \\(.*?\\)\n" 1 2 nil 2 3 (6 compilation-error-face)) compilation-error-regexp-alist)
+										;(push '("\\(.*?\\):\\([0-9]+\\): error: \\(.*?\\)\n" 1 2 nil 2 3 (6 compilation-error-face)) compilation-error-regexp-alist)
 
-;(push '("\\(.*?\\):\\([0-9]+\\): warning: \\(.*?\\)\n" 1 2 nil 1 3 (6 compilation-warning-face)) compilation-error-regexp-alist)
+										;(push '("\\(.*?\\):\\([0-9]+\\): warning: \\(.*?\\)\n" 1 2 nil 1 3 (6 compilation-warning-face)) compilation-error-regexp-alist)
 
 ;; String pattern for locating errors in maven output. This assumes a Windows drive letter at the beginning
-;(add-to-list
-; 'compilation-error-regexp-alist-alist
-; '(mvn-error-windows "^\\([a-zA-Z]:.*\\):\\[\\([0-9]+\\),\\([0-9]+\\)\\]" 1 2 3))
-;(add-to-list 'compilation-error-regexp-alist 'mvn-error-windows)
+										;(add-to-list
+										; 'compilation-error-regexp-alist-alist
+										; '(mvn-error-windows "^\\([a-zA-Z]:.*\\):\\[\\([0-9]+\\),\\([0-9]+\\)\\]" 1 2 3))
+										;(add-to-list 'compilation-error-regexp-alist 'mvn-error-windows)
 (add-to-list
  'compilation-error-regexp-alist-alist
  '(mvn-warning-windows "\\[WARNING\\][[:blank:]]+\\(.*\\):\\[\\([0-9]+\\),\\([0-9]+\\)\\]" 1 2 3 1 1 (0 compilation-warning-face)))
@@ -109,3 +109,7 @@
 		(0 '(face nil message nil help-echo nil mouse-face nil) t)
 		(1 compilation-error-face)
 		(2 compilation-error-face nil t))))
+
+(eval-after-load "jde"
+  '(progn
+	 (setq jde-mvn-nexus-url "http://nexus.s1.com/content/groups/s1")))
