@@ -25,6 +25,7 @@
 	   (define-key c-mode-base-map "\C-m" 'newline-and-indent)
 	   )
 
+	 (setq jde-mvn-nexus-url "http://nexus.s1.com/content/groups/s1")
 	 (setq
 	  jde-jdk-registry (quote (
 							   ("1.5.0_22" . "c:/program files/java/1.5.0_22")
