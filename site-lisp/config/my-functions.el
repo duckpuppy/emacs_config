@@ -88,3 +88,14 @@ LIST defaults to all existing live buffers."
   (interactive)
   (setq generated-autoload-file "~/.emacs.d/site-lisp/config/loaddefs.el")
   (update-directory-autoloads "~/.emacs.d/site-lisp/org-7.01h/lisp"))
+
+;; Prompt before exiting Emacs
+(defun ask-before-closing ()
+ "Ask whether or not to close, and then close if y was pressed"
+ (interactive)
+ (if (y-or-n-p (format "Are you sure you want to exit Emacs? "))
+	(if (< emacs-major-version 22)
+	 (save-buffers-kill-terminal)
+	 (save-buffers-kill-emacs))
+	(message "Canceled exit")))
+

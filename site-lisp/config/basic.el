@@ -99,3 +99,6 @@
 
 ;; This seems to have disappeared in Emacs 23.2
 (setq warning-suppress-types nil)
+
+(when window-system
+ (global-set-key (kbd "C-x C-c") 'ask-before-closing))
