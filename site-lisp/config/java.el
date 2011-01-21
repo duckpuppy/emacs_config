@@ -22,7 +22,8 @@
 	   (c-set-style "my-java")
 										;  (setq c-auto-newline t)
 	   (setq c-comment-continuation-stars "* ")
-	   (define-key c-mode-base-map "\C-m" 'newline-and-indent)
+;	   (define-key c-mode-base-map "\C-m" 'newline-and-indent)
+	   (define-key c-mode-base-map (kbd "RET") 'reindent-then-newline-and-indent)
 	   )
 
 	 (setq jde-jdk-registry '(

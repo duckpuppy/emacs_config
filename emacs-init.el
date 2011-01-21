@@ -10,8 +10,8 @@
 (load-library "config/pager.el")
 (load-library "config/color-theme.el")
 
-;(if (eq system-type 'windows-nt)
-;	(load-library "config/cygwin.el"))
+(if (eq system-type 'windows-nt)
+	(load-library "config/cygwin.el"))
 (load-library "config/org-mode.el")
 (load-library "config/bbdb.el")
 (load-library "config/gnus.el")
