@@ -18,7 +18,7 @@
 ;; XML Mode stuff
 ;; ============================
 ;;(load "rng-auto.el")
-(add-hook 'nxml-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
+(add-hook 'nxml-mode-hook (lambda () (local-set-key "\r" 'reindent-then-newline-and-indent)))
 
 ;; ============================
 ;; FTL Mode Stuff
@@ -79,7 +79,7 @@
 ;; css
 (add-hook 'css-mode-hook
          (lambda()
-           (local-set-key (kbd "<return>") 'newline-and-indent)
+           (local-set-key (kbd "<return>") 'reindent-then-newline-and-indent)
 ))
 
 
@@ -143,6 +143,6 @@
 (add-hook 'javascript-mode-hook
   (lambda ()
     (setq imenu-create-index-function 'javascript-imenu-create-index)
-    (local-set-key (kbd "<return>") 'newline-and-indent)
+    (local-set-key (kbd "<return>") 'reindent-then-newline-and-indent)
   )
 t)
