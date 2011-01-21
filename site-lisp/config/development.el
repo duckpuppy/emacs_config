@@ -46,6 +46,8 @@
   "Command to kill a compilation launched by `mode-compile'" t)
 (global-set-key "\C-ck" 'mode-compile-kill)
 
+(global-set-key "\r" 'reindent-then-newline-and-indent)
+
 ;; Load git support
 (add-local-load-path "magit")
 (require 'magit)
