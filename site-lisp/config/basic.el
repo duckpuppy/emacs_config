@@ -48,7 +48,7 @@
 (transient-mark-mode t) ;; No region when it is not highlighted
 ;; (setq cua-keep-region-after-copy t) ;; Standard Windows behaviour
 
-(require 'ido)
+(autoload 'ido "Interactively Do Things")
 (ido-mode t)
 
 ;; Highlight matches from searches
@@ -98,4 +98,7 @@
 	 ) auto-mode-alist))
 
 ;; This seems to have disappeared in Emacs 23.2
-(setq warning-suppress-types nil) 
+(setq warning-suppress-types nil)
+
+(when window-system
+ (global-set-key (kbd "C-x C-c") 'ask-before-closing))

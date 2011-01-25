@@ -25,7 +25,7 @@
 ;;   (define-key ac-complete-mode-map "\r" 'ac-complete)
 ;;   (define-key ac-complete-mode-map "\M-n" 'ac-next)
 ;;   (define-key ac-complete-mode-map "\M-p" 'ac-previous)
-   (set-default 'ac-sources '(ac-source-yasnippet ac-source-abbrev ac-source-words-in-buffer))
+   (set-default 'ac-sources '(ac-source-semantic ac-source-yasnippet ac-source-abbrev ac-source-words-in-buffer))
 
    (setq ac-modes
          (append ac-modes

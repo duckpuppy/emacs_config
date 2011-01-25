@@ -14,6 +14,10 @@
 (require 'cygwin-mount)
 (require 'windows-path)
 (cygwin-mount-activate)
+
+(setq binary-process-input t)
+(setq w32-quote-process-args ?\")
+
 (add-hook 'comint-output-filter-functions
 		  'shell-strip-ctrl-m nil t)
 (add-hook 'comint-output-filter-functions
@@ -22,6 +26,8 @@
 ;; For subprocesses invoked via the shell
 ;; (e.g., "shell -c command")
 (setq shell-file-name explicit-shell-file-name)
+(setenv "SHELL" explicit-shell-file-name)
+(setq explicit-bash-args '("-login" "-i"))
 
 ;; Set up Cygwin telnet
 (require 'telnet)

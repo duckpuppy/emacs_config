@@ -1,15 +1,16 @@
 ;;; p4-lowlwevel.el --- low-level support for Perforce operations in Emacs
 
+;; Copyright (C) 2009 Magnus Henoch
 ;; Copyright (C) 2002 Curl Corporation.
 
 ;; Author: Jonathan Kamens <jik@kamens.brookline.ma.us>
-;; Maintainer: Jonathan Kamens <jik@kamens.brookline.ma.us>
+;; Maintainer: Magnus Henoch <magnus.henoch@gmail.com>
 
-;; $Id: //guest/jonathan_kamens/vc-p4/p4-lowlevel.el#4 $
+;; $Id: //guest/magnus_henoch/vc-p4/p4-lowlevel.el#7 $
 ;; The path above is on the Perforce server public.perforce.com:1666.
 ;; You can get this file using a P4 client talking to that depot, or
 ;; from the URL
-;; http://public.perforce.com/guest/jonathan_kamens/vc-p4/p4-lowlevel.el.
+;; http://public.perforce.com/guest/magnus_henoch/vc-p4/p4-lowlevel.el.
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -141,6 +142,10 @@ block of untagged text (including newlines other than the last one).
 The alist is in the same order as the contents of the buffer."
   (save-excursion
     (if buffer (set-buffer buffer))
+    ;; Strip CR from end of line
+    (goto-char (point-min))
+    (while (search-forward "\r" nil t)
+      (delete-char -1))
     (let (alist tag value
                 (last-match-end (point-min)))
       (goto-char last-match-end)
@@ -298,9 +303,7 @@ buffer, then puts output in that buffer.  Returns the buffer."
     (save-excursion
       (set-buffer output-buffer)
       (erase-buffer)
-      (insert (p4-lowlevel-info-lines output-alist))
-      (if (setq text (p4-lowlevel-text output-alist))
-          (insert text))
+      (insert (p4-lowlevel-lines-matching-tag "^\\(text\\|info\\)" output-alist))
       output-buffer)))
 
 (defun p4-lowlevel-command-messages ()
@@ -412,17 +415,27 @@ value with `-m'; if S-VAL is non-nil, pass that value with `-s'."
 ; DO need to support diffing a single file.
 ; Do NOT need to support diffing multiple files.
 
-(defun p4-lowlevel-diff (file &optional rev buffer)
+(defun p4-lowlevel-diff (files &optional rev buffer)
   "Run `p4 diff' on FILE at revision REV and return a buffer
 containing the results.  REV is in the syntax described by `p4 help
 revisions'.  If REV is nil, compare the client's sync'd revision to
 the file on disk.  Uses `p4-lowlevel-diff-switches' to determine flags
 to pass to `p4 diff'.  If optional BUFFER is non-nil, put output in
 that buffer."
+  (unless (listp files)
+    (setq files (list files)))
   (setq rev (p4-lowlevel-canonicalize-revision rev))
-  (let* ((file-spec (if rev (concat file rev) file))
+  (setq files
+        (mapcar (lambda (file)
+                  (if (file-directory-p file)
+                      (concat (directory-file-name file) "/...")
+                    file))
+                files))
+  (let* ((file-specs (if rev
+                         (mapcar (lambda (file) (concat file rev)) files)
+                       files))
          (diff-args (append (list "diff") p4-lowlevel-diff-switches
-                            (list "-f" "-t" file-spec)))
+                            (list "-f" "-t") file-specs))
          (buffer (p4-lowlevel-command-into-buffer diff-args 
 						  (or buffer "diff"))))
     buffer))
@@ -482,15 +495,17 @@ Returns non-nil on success or nil on failure (or raises an error)."
 ; Do NOT need to support "-m".
 ; Do NOT need to support the specification of multiple files.
 
-(defun p4-lowlevel-filelog (file &optional buffer long follow-branches)
+(defun p4-lowlevel-filelog (file &optional buffer long follow-branches limit)
   "Fetch the p4 log of FILE and return a buffer containing it.
 If optional BUFFER is non-nil, put output in that buffer.  If optional
 LONG is non-nil, return long output (i.e., pass the `-l' flag).  If
 optional FOLLOW-BRANCHES is non-nil, include pre-branch log entries in
-output (i.e., pass the `-i' flag)."
+output (i.e., pass the `-i' flag).  If LIMIT is non-nil, get only the
+last LIMIT log entries."
   (let* ((long-flag (if long (list "-l") nil))
          (branch-flag (if follow-branches (list "-i") nil))
-         (args (append (list "filelog") long-flag branch-flag (list file))))
+         (limit-flag (when limit (list "-m" (number-to-string limit))))
+         (args (append (list "filelog") long-flag branch-flag limit-flag (list file))))
     (p4-lowlevel-command-into-buffer args (or buffer "log"))))
 
 (defun p4-lowlevel-opened (file)

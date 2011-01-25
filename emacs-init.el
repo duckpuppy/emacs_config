@@ -22,7 +22,7 @@
 (load-library "config/flymake.el")
 (load-library "config/maven.el")
 (load-library "config/c-c++.el")
-;(load-library "config/java.el")
+(load-library "config/java.el")
 (load-library "config/ruby.el")
 (load-library "config/xml-html.el")
 ;(load-library "config/muse.el")

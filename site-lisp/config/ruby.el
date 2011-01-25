@@ -86,7 +86,11 @@
 (setq rinari-tags-file-name "TAGS")
 
 (add-local-load-path "autotest")
-(require 'autotest)
+(autoload 'autotest-switch "autotest" "doco" t)
+(autoload 'autotest "autotest" "doco" t)
+(add-hook 'ruby-mode-hook
+		  '(lambda ()
+			 (define-key ruby-mode-map (kbd "C-c C-a") 'autotest-switch)))
 
 ;; yasnippet rails
 (load-library "~/.emacs.d/site-lisp/yasnippets-rails/setup.el")
