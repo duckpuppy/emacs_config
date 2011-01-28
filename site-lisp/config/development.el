@@ -29,6 +29,8 @@
 ;; helpers above.
 ;; (semantic-load-enable-semantic-debugging-helpers)
 
+(require 'semantic-ia)
+
 ;; ============================
 ;; Load ECB
 ;; ============================
@@ -54,7 +56,7 @@
 (global-set-key "\C-cg" 'magit-status)
 
 ;; Only load Perforce support on my work laptop
-(if (is-work-laptop)
+(if (is-work-machine)
 	;; Load P4 support
 	(progn
 	  (add-local-load-path "p4")

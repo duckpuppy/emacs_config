@@ -82,6 +82,18 @@ LIST defaults to all existing live buffers."
   "Returns true if this is my work laptop, false if not"
   (string-equal system-name "PAIKENS-LT"))
 
+(defun is-work-desktop ()
+  (interactive)
+  "Returns true if this is my work desktop, false if not"
+  (string-equal system-name "PAIKENS-DT2"))
+
+(defun is-work-machine ()
+  (interactive)
+  "Returns true if this is a work computer, false if not"
+  (or
+   (is-work-laptop)
+   (is-work-desktop)))
+
 (defun generate-my-autoloads nil
   (interactive)
   "Generate autoloads for packages which don't provide them already"
@@ -98,4 +110,3 @@ LIST defaults to all existing live buffers."
 	 (save-buffers-kill-terminal)
 	 (save-buffers-kill-emacs))
 	(message "Canceled exit")))
-
