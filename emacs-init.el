@@ -17,7 +17,7 @@
 (load-library "config/gnus.el")
 (load-library "config/weblogger.el")
 (load-library "config/yasnippet.el")
-(load-library "config/autocomplete.el")
+;(load-library "config/autocomplete.el")
 (load-library "config/development.el")
 (load-library "config/flymake.el")
 (load-library "config/maven.el")

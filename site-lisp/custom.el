@@ -18,7 +18,8 @@
  '(nxml-slash-auto-complete-flag t)
  '(org-agenda-files (quote ("~/org/work.org" "~/org/ssb.org" "~/org/cfe-refactor.org" "~/org/appman-refactor.org" "~/org/refile.org" "~/org/todo.org")))
  '(ps-paper-type "letter")
- '(semanticdb-project-roots (quote ("c:/p4ws/tools/izpack_extensions/src/main/java")))
+ '(semantic-java-dependency-system-include-path (quote ("C:/Program Files (x86)/Java/jdk1.5.0_21/src" "c:/cygwin/home/paikens/src/izpack/src/lib")))
+ '(semanticdb-project-roots (quote ("c:/p4ws/trunk/postilion" "c:/p4ws/tools/izpack_extensions/src/main/java")))
  '(tab-width 4)
  '(weblogger-config-alist (quote (("default" "http://www.duckpuppy.com/xmlrpc.php" "duckpuppy" "" "1")))))
 

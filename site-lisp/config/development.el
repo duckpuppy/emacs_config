@@ -1,11 +1,12 @@
 (add-local-load-path "cedet-1.0")
 (add-local-load-path "ecb-2.40")
+(add-local-load-path "gtags")
 
 ;; Load CEDET
 (load-file (concat emacs-local-site-lisp "cedet-1.0/common/cedet.el"))
 
 ;; Enable EDE (Project Management) features
-(global-ede-mode 1)
+(global-ede-mode 'nil)
 
 ;; Enabling various SEMANTIC minor modes.  See semantic/INSTALL for more ideas.
 ;; Select one of the following:
@@ -30,6 +31,26 @@
 ;; (semantic-load-enable-semantic-debugging-helpers)
 
 (require 'semantic-ia)
+(require 'semanticdb)
+(global-semanticdb-minor-mode 1)
+
+(defun my-cedet-hook ()
+  (local-set-key [(control return)] 'semantic-ia-complete-symbol)
+  (local-set-key "\C-c?" 'semantic-ia-complete-symbol-menu)
+  (local-set-key "\C-c>" 'semantic-complete-analyze-inline)
+  (local-set-key "\C-c=" 'semantic-decoration-include-visit)
+  (local-set-key "\C-cj" 'semantic-ia-fast-jump)
+  (local-set-key "\C-cq" 'semantic-ia-show-doc)
+  (local-set-key "\C-cs" 'semantic-ia-show-summary)
+  (local-set-key "\C-cp" 'semantic-analyze-proto-impl-toggle)
+  (local-set-key "\C-c+" 'semantic-tag-folding-show-block)
+  (local-set-key "\C-c-" 'semantic-tag-folding-fold-block)
+  (local-set-key "\C-c\C-c+" 'semantic-tag-folding-show-all)
+  (local-set-key "\C-c\C-c-" 'semantic-tag-folding-fold-all)
+  )
+(add-hook 'c-mode-common-hook 'my-cedet-hook)
+
+(global-semantic-tag-folding-mode 1)
 
 ;; ============================
 ;; Load ECB
@@ -54,6 +75,24 @@
 (add-local-load-path "magit")
 (require 'magit)
 (global-set-key "\C-cg" 'magit-status)
+
+;; ctags
+(require 'semanticdb-ectag)
+(semantic-load-enable-primary-exuberent-ctags-support)
+(semantic-load-enable-secondary-exuberent-ctags-support)
+
+;; GNU Global support
+(require 'semanticdb-global)
+(require 'gtags)
+
+(add-hook 'gtags-mode-hook
+	(lambda()
+		(local-set-key (kbd "M-.") 'gtags-find-tag)
+		(local-set-key (kbd "M-,") 'gtags-find-rtag)))
+
+(add-hook 'c-mode-common-hook
+	(lambda()
+		(gtags-mode t)))
 
 ;; Only load Perforce support on my work laptop
 (if (is-work-machine)

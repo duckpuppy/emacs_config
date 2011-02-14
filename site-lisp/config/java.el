@@ -37,4 +37,6 @@
 
 (setq-mode-local java-mode
 				 semanticdb-find-default-throttle
-				 '(project unloaded system recursive))
+				 '(local project unloaded recursive))
+
+(semanticdb-enable-gnu-global-databases 'java-mode)
