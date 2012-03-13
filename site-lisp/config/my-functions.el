@@ -85,7 +85,7 @@ LIST defaults to all existing live buffers."
 (defun is-work-desktop ()
   (interactive)
   "Returns true if this is my work desktop, false if not"
-  (string-equal system-name "PAIKENS-DT2"))
+  (string-equal system-name "PAIKENS-DT"))
 
 (defun is-work-machine ()
   (interactive)

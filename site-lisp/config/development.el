@@ -1,11 +1,12 @@
-(add-local-load-path "cedet-1.0")
+;(add-local-load-path "cedet-1.0")
 (add-local-load-path "ecb-2.40")
 (add-local-load-path "gtags")
 
 ;; Load CEDET
-(load-file (concat emacs-local-site-lisp "cedet-1.0/common/cedet.el"))
+;(load-file (concat emacs-local-site-lisp "cedet-1.0/common/cedet.el"))
 
 ;; Enable EDE (Project Management) features
+(semantic-mode 1)
 (global-ede-mode 'nil)
 
 ;; Enabling various SEMANTIC minor modes.  See semantic/INSTALL for more ideas.
@@ -23,16 +24,21 @@
 ;; (semantic-load-enable-guady-code-helpers)
 
 ;; * This turns on which-func support (Plus all other code helpers)
-(semantic-load-enable-excessive-code-helpers)
+;(semantic-load-enable-excessive-code-helpers)
 
 ;; This turns on modes that aid in grammar writing and semantic tool
 ;; development.  It does not enable any other features such as code
 ;; helpers above.
 ;; (semantic-load-enable-semantic-debugging-helpers)
 
-(require 'semantic-ia)
-(require 'semanticdb)
-(global-semanticdb-minor-mode 1)
+(setq semantic-default-submodes
+ 	'(global-semanticdb-minor-mode
+	  global-semantic-idle-scheduler-mode
+	  global-semantic-idle-summary-mode
+	  global-semantic-idle-completions-mode
+	  global-semantic-decoration-mode
+	  global-semantic-highlight-func-mode
+	  global-semantic-stickyfunc-mode))
 
 (defun my-cedet-hook ()
   (local-set-key [(control return)] 'semantic-ia-complete-symbol)
@@ -49,8 +55,6 @@
   (local-set-key "\C-c\C-c-" 'semantic-tag-folding-fold-all)
   )
 (add-hook 'c-mode-common-hook 'my-cedet-hook)
-
-(global-semantic-tag-folding-mode 1)
 
 ;; ============================
 ;; Load ECB
@@ -76,13 +80,7 @@
 (require 'magit)
 (global-set-key "\C-cg" 'magit-status)
 
-;; ctags
-(require 'semanticdb-ectag)
-(semantic-load-enable-primary-exuberent-ctags-support)
-(semantic-load-enable-secondary-exuberent-ctags-support)
-
 ;; GNU Global support
-(require 'semanticdb-global)
 (require 'gtags)
 
 (add-hook 'gtags-mode-hook
