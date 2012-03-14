@@ -13,3 +13,6 @@
 [submodule "site-lisp/magit"]
 	path = site-lisp/magit
 	url = http://github.com/philjackson/magit.git
+[submodule "site-lisp/hyde"]
+	path = site-lisp/hyde
+	url = https://github.com/nibrahim/Hyde.git

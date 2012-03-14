@@ -27,6 +27,7 @@
 (load-library "config/xml-html.el")
 ;(load-library "config/muse.el")
 ;(load-library "config/ahk.el")
+(load-library "config/hyde.el")
 
 (server-start)
 (message "My .emacs loaded in %ds" (destructuring-bind (hi lo ms) (current-time)
