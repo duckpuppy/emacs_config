@@ -31,7 +31,13 @@
 (setq c-basic-offset 4)
 
 ;; Change the font to something nicer
-(set-default-font "-outline-Consolas-normal-r-normal-normal-14-97-96-96-c-*-iso8859-1")
+(if (string= (symbol-name system-type) "windows-nt")
+	(set-default-font "-outline-Consolas-normal-normal-normal-mono-18-*-*-*-c-*-iso8859-1")
+	(modify-frame-parameters nil '((wait-for-wm . nil))))
+
+(if (string= (symbol-name system-type) "darwin")
+	(set-default-font "-outline-Inconsolata-normal-normal-normal-mono-18-*-*-*-c-*-iso8859-1")
+	(modify-frame-parameters nil '((wait-for-wm . nil))))
 
 ;; Disable the menu bar and the tool bar
 
