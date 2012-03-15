@@ -1,5 +1,5 @@
 ;(add-local-load-path "cedet-1.0")
-(add-local-load-path "ecb-2.40")
+(add-local-load-path "ecb-snap")
 (add-local-load-path "gtags")
 
 ;; Load CEDET
