@@ -1,60 +1,15 @@
-;(add-local-load-path "cedet-1.0")
 (add-local-load-path "ecb-snap")
 (add-local-load-path "gtags")
-
-;; Load CEDET
-;(load-file (concat emacs-local-site-lisp "cedet-1.0/common/cedet.el"))
 
 ;; Enable EDE (Project Management) features
 (semantic-mode 1)
 (global-ede-mode 'nil)
 
-;; Enabling various SEMANTIC minor modes.  See semantic/INSTALL for more ideas.
-;; Select one of the following:
-
-;; * This enables the database and idle reparse engines
-;;(semantic-load-enable-minimum-features)
-
-;; * This enables some tools useful for coding, such as summary mode
-;;   imenu support, and the semantic navigator
-;; (semantic-load-enable-code-helpers)
-
-;; * This enables even more coding tools such as the nascent intellisense mode
-;;   decoration mode, and stickyfunc mode (plus regular code helpers)
-;; (semantic-load-enable-guady-code-helpers)
-
-;; * This turns on which-func support (Plus all other code helpers)
-;(semantic-load-enable-excessive-code-helpers)
-
-;; This turns on modes that aid in grammar writing and semantic tool
-;; development.  It does not enable any other features such as code
-;; helpers above.
-;; (semantic-load-enable-semantic-debugging-helpers)
-
-(setq semantic-default-submodes
- 	'(global-semanticdb-minor-mode
-	  global-semantic-idle-scheduler-mode
-	  global-semantic-idle-summary-mode
-	  global-semantic-idle-completions-mode
-	  global-semantic-decoration-mode
-	  global-semantic-highlight-func-mode
-	  global-semantic-stickyfunc-mode))
-
-(defun my-cedet-hook ()
-  (local-set-key [(control return)] 'semantic-ia-complete-symbol)
-  (local-set-key "\C-c?" 'semantic-ia-complete-symbol-menu)
-  (local-set-key "\C-c>" 'semantic-complete-analyze-inline)
-  (local-set-key "\C-c=" 'semantic-decoration-include-visit)
-  (local-set-key "\C-cj" 'semantic-ia-fast-jump)
-  (local-set-key "\C-cq" 'semantic-ia-show-doc)
-  (local-set-key "\C-cs" 'semantic-ia-show-summary)
-  (local-set-key "\C-cp" 'semantic-analyze-proto-impl-toggle)
-  (local-set-key "\C-c+" 'semantic-tag-folding-show-block)
-  (local-set-key "\C-c-" 'semantic-tag-folding-fold-block)
-  (local-set-key "\C-c\C-c+" 'semantic-tag-folding-show-all)
-  (local-set-key "\C-c\C-c-" 'semantic-tag-folding-fold-all)
-  )
-(add-hook 'c-mode-common-hook 'my-cedet-hook)
+(global-semantic-idle-summary-mode)
+(global-semantic-idle-completions-mode)
+(global-semantic-decoration-mode)
+(global-semantic-highlight-func-mode)
+(global-semantic-stickyfunc-mode)
 
 ;; ============================
 ;; Load ECB
