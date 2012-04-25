@@ -97,18 +97,10 @@
 
 ;; org-remember setup
 (setq org-default-notes-file "~/org/refile.org")
-(require 'remember)
-(org-remember-insinuate)
-(global-set-key (kbd "C-M-r") 'org-remember)
-(setq org-remember-store-without-prompt t)
-(setq org-remember-default-headline "Tasks")
-(setq org-remember-templates (quote (("todo" ?t "* TODO %?\n  %u\n  %a" nil bottom nil)
-                                     ("note" ?n "* %?                                        :NOTE:\n  :CLOCK:\n  :END:\n  %U\n  %a" nil bottom nil)
-                                     ("phone" ?p "* PHONE %:name - %:company -                :PHONE:\n  Contact Info: %a\n  %u\n  %?" nil bottom nil)
-                                     ("appointment" ?a "* %?\n  %U" "~/org/todo.org" "Appointments" nil))))
+(global-set-key (kbd "C-cr") 'org-capture)
 
 ;; ditaa
-(setq org-ditaa-jar-path (concat emacs-local-site-lisp "org-7.01h/contrib/scripts/ditaa.jar"))
+(setq org-ditaa-jar-path (concat emacs-local-site-lisp "org-7.8.09/contrib/scripts/ditaa.jar"))
 
 (org-babel-do-load-languages
  'org-babel-load-languages

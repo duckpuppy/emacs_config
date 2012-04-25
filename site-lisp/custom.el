@@ -17,7 +17,7 @@
  '(nxml-auto-insert-xml-declaration-flag t)
  '(nxml-child-indent 4)
  '(nxml-slash-auto-complete-flag t)
- '(org-agenda-files (quote ("~/org/work.org" "~/org/ssb.org" "~/org/cfe-refactor.org" "~/org/appman-refactor.org" "~/org/refile.org" "~/org/todo.org")))
+ '(org-agenda-files (quote ("~/org/work.org")))
  '(ps-paper-type "letter")
  '(semantic-complete-inline-analyzer-displayor-class (quote semantic-displayor-ghost))
  '(semantic-java-dependency-system-include-path (quote ("C:/Program Files (x86)/Java/jdk1.5.0_21/src" "c:/cygwin/home/paikens/src/izpack/src/lib")))
