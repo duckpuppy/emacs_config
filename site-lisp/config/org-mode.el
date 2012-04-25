@@ -1,9 +1,9 @@
 ;;
 ;; Org Mode
 ;;
-(add-local-load-path "org-7.01h")
-(add-local-load-path "org-7.01h/lisp")
-(add-local-load-path "org-7.01h/contrib/lisp")
+(add-local-load-path "org-7.8.09")
+(add-local-load-path "org-7.8.09/lisp")
+(add-local-load-path "org-7.8.09/contrib/lisp")
 
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
 ;(require 'org-install)
