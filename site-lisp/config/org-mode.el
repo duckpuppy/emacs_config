@@ -6,7 +6,6 @@
 (add-local-load-path "org-7.8.09/contrib/lisp")
 
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
-;(require 'org-install)
 (require 'loaddefs)
 
 ;;
@@ -26,7 +25,7 @@
 
 ;; Do not consider the diary and calendar in org mode agenda
 (setq org-agenda-include-diary nil)
-(setq org-agenda-diary-file "~/org/diary.org")
+(setq org-agenda-diary-file "~/Dropbox/Org/diary.org")
 
 ;; Ignore S-left and S-right as far as logging time stamps and notes on state change
 (setq org-treat-S-cursor-todo-selection-as-state-change nil)
@@ -36,49 +35,33 @@
 (setq org-log-into-drawer t)
 
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "STARTED(s!)" "|" "DONE(d!/!)")
-	(sequence "WAITING(W@/!)" "SOMEDAY(S!)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
-	(sequence "REPORT(r@)" "BUG(b)" "KNOWNCAUSE(k@/!)" "|" "FIXED(f!)")
-	;;	(sequence "|" "CANCELLED(c)")
-	))
+      '((sequence "TODO(t)" "NEXT(n)" "STARTED(s!)" "|" "DONE(d!/!)")
+		(sequence "WAITING(W@/!)" "SOMEDAY(S!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE")))
 
 (setq org-todo-keyword-faces (quote (("TODO" :foreground "red" :weight bold)
-				     ("STARTED" :foreground "blue" :weight bold)
-				     ("DONE" :foreground "forest green" :weight bold)
-				     ("WAITING" :foreground "orange" :weight bold)
-				     ("SOMEDAY" :foreground "magenta" :weight bold)
-				     ("CANCELLED" :foreground "forest green" :weight bold)
-				     ("QUOTE" :foreground "red" :weight bold)
-				     ("QUOTED" :foreground "magenta" :weight bold)
-				     ("APPROVED" :foreground "forest green" :weight bold)
-				     ("EXPIRED" :foreground "forest green" :weight bold)
-				     ("REJECTED" :foreground "forest green" :weight bold)
-				     ("OPEN" :foreground "blue" :weight bold))))
+									 ("NEXT" :foreground "blue" :weight bold)
+									 ("STARTED" :foreground "blue" :weight bold)
+									 ("DONE" :foreground "forest green" :weight bold)
+									 ("WAITING" :foreground "orange" :weight bold)
+									 ("SOMEDAY" :foreground "magenta" :weight bold)
+									 ("HOLD" :foreground "magenta" :weight bold)
+									 ("CANCELLED" :foreground "forest green" :weight bold)
+									 ("PHONE" :foreground "forest green" :weight bold))))
 
-(setq org-tag-alist '((:startgroup . nil)
-		      ("@work" . ?w) ("@home" . ?h)
-		      (:endgroup . nil)
-		      ("buy" . ?b) ("@comics" . ?c)
-		      ("NEXT" . ?n) ("WAITING" . ?W)
-		      ("PHONE" . ?p)
-))
+(setq org-todo-state-tags-triggers
+	  (quote (("CANCELLED" ("CANCELLED" . t))
+			  ("WAITING" ("WAITING" . t))
+			  ("HOLD" ("WAITING" . t) ("HOLD" . t))
+			  (done ("WAITING") ("HOLD"))
+			  ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
+			  ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
+			  ("STARTED" ("WAITING") ("CANCELLED") ("HOLD"))
+			  ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
 
-;; Enable orgstruct++-mode in Gnus message buffers to aid in creating structured email messages
-(setq message-mode-hook
-      (quote (orgstruct++-mode
-	      (lambda nil (setq fill-column 72) (flyspell-mode 1))
-	      turn-on-auto-fill
-	      bbdb-define-all-aliases)))
+(setq org-agenda-files (quote ("~/Dropbox/Org")))
 
-;; Make TAB the yas trigger key in the org-mode-hook and turn on flyspell mode
-(add-hook 'org-mode-hook
-	  (lambda ()
-	    ;; yasnippet
-	    (make-variable-buffer-local 'yas/trigger-key)
-	    (setq yas/trigger-key [tab])
-	    (define-key yas/keymap [tab] 'yas/next-field-group)
-	    ;; flyspell mode to spell check everywhere
-	    (flyspell-mode 1)))
+;; flyspell mode for spell checking everywhere
+(add-hook 'org-mode-hook 'turn-on-flyspell 'append)
 
 ;; Use IDO for target completion
 (setq org-completion-use-ido t)
@@ -95,28 +78,56 @@
 ;; Allow refile to create parent tasks with confirmation
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
 
-;; org-remember setup
-(setq org-default-notes-file "~/org/refile.org")
-(global-set-key (kbd "C-cr") 'org-capture)
+(setq org-directory "~/Dropbox/Org")
+
+;; org-capture setup
+(setq org-default-notes-file "~/Dropbox/Org/refile.org")
+(define-key global-map "\C-cc" 'org-capture)
+(setq org-capture-templates
+	  (quote
+	   (("c"
+		 "Web clipping"
+		 entry
+		 (file+headline "~/Dropbox/Org/refile.org" "Clippings")
+		 "* %^{Title|%:description}\n\n  %u\n  Source: %c\n\n  %i"
+		 :empty-lines 1
+		 :immediate-finish t)
+		("t"
+		 "TODO"
+		 entry
+		 (file "~/Dropbox/Org/refile.org")
+		 "* TODO %?\n%U\n%a\n"
+		 :clock-resume t)
+		("j"
+		 "Journal"
+		 entry
+		 (file+datetree "~/Dropbox/Org/diary.org")
+		 "* %?\n%U\n"
+		 :clock-resume t)
+		("n"
+		 "note"
+		 entry
+		 (file "~/Dropbox/Org/refile.org")
+		 "* %? :NOTE:\n%U\n%a\n"
+		 :clock-resume t)
+		("p"
+		 "Phone call"
+		 entry
+		 (file "~/Dropbox/Org/refile.org")
+		 "* PHONE %? :PHONE:\n%U"
+		 :clock-in t :clock-resume t)
+		)))
+
+;; Remove empty LOGBOOK drawers on clock-out
+(defun bh/remove-empty-drawer-on-clock-out ()
+  (interactive)
+  (save-excursion
+	(beginning-of-line 0)
+	(org-remove-empty-drawer-at "LOGBOOK" (point))))
+(add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
 
 ;; ditaa
 (setq org-ditaa-jar-path (concat emacs-local-site-lisp "org-7.8.09/contrib/scripts/ditaa.jar"))
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((R . t)
-   (ditaa . t)
-   (dot . t)
-   (emacs-lisp . t)
-   (gnuplot . t)
-   (haskell . nil)
-   (ocaml . nil)
-   (python . t)
-   (ruby . t)
-   (screen . nil)
-   (sh . t)
-   (sql . nil)
-   (sqlite . t)))
 
 ;; Custom agenda views
 (setq org-agenda-custom-commands
@@ -130,39 +141,15 @@
               ("N" "Notes" tags "NOTE" nil)
               ("n" "Next" tags "NEXT-WAITING-CANCELLED/!" nil)
               ("p" "Projects" tags-todo "LEVEL=2-NEXT-WAITING-CANCELLED/!-DONE" nil)
-              ("A" "Tasks to be Archived" tags "LEVEL=2/DONE|CANCELLED" nil)
-              ("h" "Habits" tags "STYLE=\"habit\"" ((org-agenda-todo-ignore-with-date nil) (org-agenda-todo-ignore-scheduled nil) (org-agenda-todo-ignore-deadlines nil))))))
+              ("A" "Tasks to be Archived" tags "LEVEL=2/DONE|CANCELLED" nil))))
 
-;; Nice keybindings
+;; MobileOrg
+(setq org-mobile-directory "~/Dropbox/MobileOrg")
+(setq org-mobile-inbox-for-pull "~/Dropbox/Org/refile.org")
+
+;; org-protocol
+(require 'org-protocol)
+
+;; Global key bindings
 (global-set-key (kbd "<f12>") 'org-agenda)
-;;(global-set-key (kbd "<f5>") 'bh/org-todo)
-(global-set-key (kbd "<S-f5>") 'widen)
-(global-set-key (kbd "<f7>") 'set-truncate-lines)
-(global-set-key (kbd "<f8>") 'org-cycle-agenda-files)
-(global-set-key (kbd "<f9> b") 'bbdb)
-(global-set-key (kbd "<f9> c") 'calendar)
-(global-set-key (kbd "<f9> f") 'boxquote-insert-file)
-(global-set-key (kbd "<f9> g") 'gnus)
-(global-set-key (kbd "<f9> h") 'hide-other)
-;;(global-set-key (kbd "<f9> i") (lambda ()
-;;                                 (interactive)
-;;                                 (info "~/.emacs.d/org-6.34c/doc/org.info")))
-;;(global-set-key (kbd "<f9> m") 'bh/clock-in-read-mail-and-news-task)
-;;(global-set-key (kbd "<f9> o") 'bh/clock-in-organization-task)
-;;(global-set-key (kbd "<f9> O") 'org-clock-out)
-(global-set-key (kbd "<f9> r") 'boxquote-region)
-(global-set-key (kbd "<f9> s") (lambda () (interactive) (switch-to-buffer "*scratch*") (delete-other-windows)))
-;;(global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
-(global-set-key (kbd "<f9> u") (lambda ()
-                                 (interactive)
-                                 (untabify (point-min) (point-max))))
-(global-set-key (kbd "<f9> v") 'visible-mode)
-;;(global-set-key (kbd "<f9> SPC") 'bh/clock-in-interrupted-task)
-(global-set-key (kbd "C-<f9>") 'previous-buffer)
-(global-set-key (kbd "C-x n r") 'narrow-to-region)
-(global-set-key (kbd "C-<f10>") 'next-buffer)
-;;(global-set-key (kbd "<f11>") 'org-clock-goto)
-;;(global-set-key (kbd "C-<f11>") 'org-clock-in)
-;;(global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
-;;(global-set-key (kbd "M-<f11>") 'org-resolve-clocks)
-(global-set-key (kbd "C-M-r") 'org-remember)
+(global-set-key (kbd "C-c r") 'org-capture)

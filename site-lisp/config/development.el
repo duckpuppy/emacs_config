@@ -3,7 +3,7 @@
 
 ;; Enable EDE (Project Management) features
 (semantic-mode 1)
-(global-ede-mode 'nil)
+;; (global-ede-mode 'nil)
 
 (global-semantic-idle-summary-mode)
 (global-semantic-idle-completions-mode)
