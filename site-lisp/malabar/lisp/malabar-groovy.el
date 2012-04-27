@@ -37,7 +37,7 @@
 (defvar malabar-groovy-compilation-buffer-name "*Malabar Compilation*")
 (get-buffer-create malabar-groovy-compilation-buffer-name)
 
-(defvar malabar-groovy-time-out-waiting-for-groovysh 10)
+(defvar malabar-groovy-time-out-waiting-for-groovysh 30)
 
 (defvar malabar-groovy-buffer-name
   (concat "*" malabar-groovy-comint-name "*"))

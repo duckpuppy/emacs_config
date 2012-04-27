@@ -35,6 +35,35 @@
 (require 'magit)
 (global-set-key "\C-cg" 'magit-status)
 
+;; Support a tag ring in semantic mode
+(defvar semantic-tags-location-ring (make-ring 20))
+
+(defun semantic-goto-definition (point)
+  "Goto definition using semantic-ia-fast-jump and save the pointer marker if tag is found"
+  (interactive "d")
+  (condition-case err
+	  (progn
+		(ring-insert semantic-tags-location-ring (point-marker))
+		(semantic-ia-fast-jump point))
+	(error
+	 ;; if not found remove the tag saved in the ring
+	 (set-marker (ring-remove semantic-tags-location-ring 0) nil nil)
+	 (signal (car err) (cdr err)))))
+
+(defun semantic-pop-tag-mark ()
+  "popup the tag saved by semantic-goto-definition"
+  (interactive)
+  (if (ring-empty-p semantic-tags-location-ring)
+	  (message "%s" "No tags available")
+	(let* ((marker (ring-remove semantic-tags-location-ring 0))
+		   (buff (marker-buffer marker))
+		   (pos (marker-position marker)))
+	  (if (not buff)
+		  (message "Buffer has been deleted")
+		(switch-to-buffer buff)
+		(goto-char pos))
+	  (set-marker marker nil nil))))
+
 ;; GNU Global support
 (require 'gtags)
 
@@ -44,8 +73,10 @@
 		(local-set-key (kbd "M-,") 'gtags-find-rtag)))
 
 (add-hook 'c-mode-common-hook
-	(lambda()
-		(gtags-mode t)))
+		  (lambda()
+			(local-set-key (kbd "C-cj") 'semantic-goto-definition)
+			(local-set-key (kbd "C-cp") 'semantic-pop-tag-mark)
+			(gtags-mode t)))
 
 ;; Only load Perforce support on my work laptop
 (if (is-work-machine)
