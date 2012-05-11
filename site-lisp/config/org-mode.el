@@ -6,7 +6,6 @@
 (add-local-load-path "org-7.8.09/contrib/lisp")
 
 (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode))
-(require 'loaddefs)
 
 ;;
 ;; Standard key bindings
@@ -59,12 +58,6 @@
 			  ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
 
 (setq org-agenda-files (quote ("~/Dropbox/Org")))
-
-;; flyspell mode for spell checking everywhere
-(add-hook 'org-mode-hook 'turn-on-flyspell 'append)
-
-;; Use IDO for target completion
-(setq org-completion-use-ido t)
 
 ;; Targets include this file and any file contributing to the agenda - up to 5 levels deep
 (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 5) (nil :maxlevel . 5))))

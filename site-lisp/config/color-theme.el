@@ -8,6 +8,4 @@
 (load-library "zen-and-art.el")
 (load-library "color-theme-twilight.el")
 (color-theme-initialize)
-;;(color-theme-wombat)
-;;(color-theme-zen-and-art)
 (color-theme-twilight)

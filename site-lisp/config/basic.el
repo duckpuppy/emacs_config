@@ -75,21 +75,6 @@
 (require 'paren) (show-paren-mode t)
 (require 'whitespace)
 
-;; redo
-(add-local-load-path "redo-plus")
-(require 'redo+)
-(global-set-key [(control -)] 'redo)
-
-;; find-recursive
-(add-local-load-path "find-recursive")
-(require 'find-recursive)
-
-;; anything
-(add-local-load-path "anything")
-(require 'anything)
-;; TODO This messes with CEDET, find out why
-;(require 'anything-config)
-
 ;; ============================
 ;; Set up which modes to use for which file extensions
 ;; ============================
