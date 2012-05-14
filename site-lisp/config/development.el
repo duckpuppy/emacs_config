@@ -20,6 +20,11 @@
 (add-local-load-path "ecb-2.40")
 (require 'ecb-autoloads)
 
+;; Disable vc-git, since I'm using magit
+(require 'vc)
+(delete 'Git vc-handled-backends)
+(remove-hook 'find-file-hooks 'vc-find-file-hook)
+
 ;; Magit
 (add-local-load-path "magit-1.1.1")
 (require 'magit)
