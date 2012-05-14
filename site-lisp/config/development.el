@@ -16,3 +16,10 @@
   (semanticdb-enable-gnu-global-databases 'c-mode)
   (semanticdb-enable-gnu-global-databases 'c++-mode))
 
+;; ECB
+(add-local-load-path "ecb-2.40")
+(require 'ecb-autoloads)
+
+;; Magit
+(add-local-load-path "magit-1.1.1")
+(require 'magit)
