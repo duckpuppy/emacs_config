@@ -1,19 +1,16 @@
-(setq emacs-local-site-lisp (expand-file-name "~/.emacs.d/site-lisp/"))
-(add-to-list 'load-path emacs-local-site-lisp)
+(setq cust-emacs-init-file load-file-name)
+(setq cust-emacs-config-dir
+      (file-name-directory cust-emacs-init-file))
+(setq cust-init-dir
+      (expand-file-name "init.d" cust-emacs-config-dir))
 
-(defvar *emacs-load-start* (current-time))
-(require 'cl)
+(if (file-exists-p cust-init-dir)
+    (dolist (file (directory-files cust-init-dir t "\.el$"))
+      (load file)))
 
-;; Store custom configuration in a shared folder
-(setq custom-file (concat emacs-local-site-lisp "custom.el"))
-(load custom-file)
-(load-library "config/my-functions.el")
+;; set up 'custom' system
+(setq custom-file (expand-file-name "emacs-customizations.el" cust-emacs-config-dir))
+(if (file-exists-p custom-file) 
+   (load custom-file))
 
-(load-library "config/basic.el")
-(load-library "config/color-theme.el")
-(load-library "config/org-mode.el")
-(load-library "config/development.el")
-(load-library "config/java.el")
-
-(message "My .emacs loaded in %ds" (destructuring-bind (hi lo ms) (current-time)
-									 (- (+ hi lo) (+ (first *emacs-load-start*) (second *emacs-load-start*)))))
+(server-start)

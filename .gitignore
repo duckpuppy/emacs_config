@@ -2,7 +2,6 @@
 *~
 ac-comphist.dat
 anything-c-adaptive-history
-site-lisp/nxhtml/etc/schema/xhtml-loader.rnc
 \#*\#
 *.elc
 server/
@@ -10,4 +9,10 @@ ede-projects.el
 semanticdb/
 srecode-map.el
 .org-id-locations
+eshell/
+elpa/
+backups/
+auto-save-list/
+places
+.smex-items
 
