@@ -22,5 +22,9 @@
 	(set-default-font "-outline-Inconsolata-normal-normal-normal-mono-18-*-*-*-c-*-iso8859-1")
 	(modify-frame-parameters nil '((wait-for-wm . nil))))
 
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-20120327/dict")
+(ac-config-default)
+
 (when window-system
   (global-set-key (kbd "C-x C-c") 'ask-before-closing))
