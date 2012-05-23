@@ -1,4 +1,0 @@
-(setq emacs-local-site-lisp (expand-file-name "~/.emacs.d/site-lisp/"))
-(add-to-list 'load-path emacs-local-site-lisp)
-
-(load "~/.emacs.d/emacs-init.el")

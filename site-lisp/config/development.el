@@ -28,3 +28,34 @@
 ;; Magit
 (add-local-load-path "magit-1.1.1")
 (require 'magit)
+
+;; ==========================
+;; Indentation
+;; ==========================
+(defun my-c-mode-common-hook ()
+  (turn-on-font-lock)
+  (c-set-offset 'substatement-open 0)
+  (c-set-offset 'case-label '+)
+;;  (c-set-offset 'arglist-cont-nonempty c-lineup-arglist))
+)
+(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+
+;; nXhtml
+(load "~/.emacs.d/site-lisp/nxhtml/autostart.el")
+
+;; Perforce
+(if (is-work-machine)
+	;; Load P4 support
+	(progn
+	  (require 'p4)
+	  (setq p4-do-find-file nil)))
+
+;; Autocomplete
+(add-local-load-path "auto-complete-1.3.1")
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/site-lisp/auto-complete-1.3.1/dict")
+(ac-config-default)
+
+(add-hook 'c-mode-common-hook
+		  (lambda ()
+			(add-to-list 'ac-sources 'ac-source-semantic)))
