@@ -1,3 +1,6 @@
+(setq emacs-local-site-lisp (expand-file-name "~/.emacs.d/site-lisp"))
+(add-to-list 'load-path emacs-local-site-lisp)
+
 ;; Prompt before exiting Emacs
 (defun ask-before-closing ()
  "Ask whether or not to close, and then close if y was pressed"
@@ -8,19 +11,14 @@
 	 (save-buffers-kill-emacs))
 	(message "Canceled exit")))
 
+(defun add-local-load-path (path-string)
+  (message (format "Adding %S to load path" (concat emacs-local-site-lisp path-string)))
+  (add-to-list 'load-path (concat emacs-local-site-lisp path-string)))
+
 (setq scroll-preserve-screen-position 1)
 
 (setq tab-width 4)
 (setq c-basic-offset 4)
-
-;; Change the font to something nicer
-(if (string= (symbol-name system-type) "windows-nt")
-	(set-default-font "-outline-Consolas-normal-normal-normal-mono-18-*-*-*-c-*-iso8859-1")
-	(modify-frame-parameters nil '((wait-for-wm . nil))))
-
-(if (string= (symbol-name system-type) "darwin")
-	(set-default-font "-outline-Inconsolata-normal-normal-normal-mono-18-*-*-*-c-*-iso8859-1")
-	(modify-frame-parameters nil '((wait-for-wm . nil))))
 
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-20120327/dict")
@@ -28,3 +26,7 @@
 
 (when window-system
   (global-set-key (kbd "C-x C-c") 'ask-before-closing))
+
+(require 'google-contacts)
+(require 'google-weather)
+(require 'org-google-weather)

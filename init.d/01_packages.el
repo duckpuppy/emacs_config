@@ -20,6 +20,18 @@
                       auto-complete
                       org
                       rinari
+                      yasnippet
+                      haml-mode
+                      sass-mode
+                      markdown-mode
+                      markdown-mode+
+                      coffee-mode
+                      yaml-mode
+                      gtags
+                      ctags
+		      rainbow-mode
+		      oauth2
+		      google-maps
                       twilight-theme
                       ))
 

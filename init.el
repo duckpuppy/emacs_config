@@ -13,4 +13,6 @@
 (if (file-exists-p custom-file) 
    (load custom-file))
 
+(setq-default indent-tabs-mode t)
+
 (server-start)
