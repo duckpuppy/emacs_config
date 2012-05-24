@@ -27,6 +27,3 @@
 (when window-system
   (global-set-key (kbd "C-x C-c") 'ask-before-closing))
 
-(require 'google-contacts)
-(require 'google-weather)
-(require 'org-google-weather)
