@@ -1,6 +1,3 @@
-(setq emacs-local-site-lisp (expand-file-name "~/.emacs.d/site-lisp"))
-(add-to-list 'load-path emacs-local-site-lisp)
-
 ;; Prompt before exiting Emacs
 (defun ask-before-closing ()
  "Ask whether or not to close, and then close if y was pressed"

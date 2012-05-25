@@ -1,3 +1,8 @@
+(setq emacs-local-site-lisp (expand-file-name "~/.emacs.d/site-lisp"))
+(add-to-list 'load-path emacs-local-site-lisp)
+
+(require 'package-spec)
+
 (setq cust-emacs-init-file load-file-name)
 (setq cust-emacs-config-dir
       (file-name-directory cust-emacs-init-file))
