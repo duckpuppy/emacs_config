@@ -21,6 +21,8 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-20120327/dict")
 (ac-config-default)
 
+(autoload 'project-mode "project-mode" "Project Mode" t)
+
 (when window-system
   (global-set-key (kbd "C-x C-c") 'ask-before-closing))
 

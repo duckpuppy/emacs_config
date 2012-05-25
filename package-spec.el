@@ -19,4 +19,7 @@
 (package "gtags")
 (package "ctags")
 (package "rainbow-mode")
+(package "project-mode")
+(package "ntcmd")
+(package "minimap")
 (package "twilight-theme")
