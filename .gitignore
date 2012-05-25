@@ -16,3 +16,4 @@ auto-save-list/
 places
 .smex-items
 url/
+site-lisp/nxhtml/etc/schema/xhtml-loader.rnc
