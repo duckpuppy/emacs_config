@@ -34,6 +34,6 @@
 ;; (require 'jdibug)
 
 ;; (add-local-load-path "jdee-2.4.0.1/lisp")
-'' (require 'jde)
+;; (require 'jde)
 
 ;; (require 'flymake-ecj)
