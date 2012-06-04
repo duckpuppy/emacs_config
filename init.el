@@ -1,5 +1,7 @@
-(setq emacs-local-site-lisp (expand-file-name "~/.emacs.d/site-lisp"))
+(setq emacs-local-site-lisp (expand-file-name "~/.emacs.d/site-lisp/"))
 (add-to-list 'load-path emacs-local-site-lisp)
+
+(setq stack-trace-on-error t)
 
 (require 'package-spec)
 

@@ -22,4 +22,6 @@
 (package "project-mode")
 (package "ntcmd")
 (package "minimap")
+(package "ecb_snap")
+(package "w3")
 (package "twilight-theme")

@@ -28,3 +28,12 @@
 
 (load "~/.emacs.d/site-lisp/nxhtml/autostart.el")
 
+(require 'maven)
+
+;; (add-local-load-path "jdibug-0.5")
+;; (require 'jdibug)
+
+;; (add-local-load-path "jdee-2.4.0.1/lisp")
+'' (require 'jde)
+
+;; (require 'flymake-ecj)
