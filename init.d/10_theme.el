@@ -19,7 +19,7 @@
 
 (add-hook 'after-init-hook
           (lambda ()
-            (load-theme 'twilight)
+            (load-theme 'solarized-dark)
             ;; Change the font to something nicer
             (if (string= (symbol-name system-type) "windows-nt")
                 (set-default-font "-outline-Consolas-normal-normal-normal-mono-18-*-*-*-c-*-iso8859-1")
